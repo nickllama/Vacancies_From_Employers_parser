@@ -45,6 +45,8 @@ GROUP BY employer.id'''
 
     @staticmethod
     def get_all_vacancies():
+        """список всех вакансий с указанием названия компании, названия вакансии и зарплаты и ссылки на вакансию."""
+        print(DBManager.get_all_vacancies.__doc__)
         sql = '''SELECT employer.name, vacancy.name, vacancy.salary, vacancy.alternate_url
 FROM vacancy
 JOIN employer ON employer.id = vacancy.employer_id'''
@@ -54,6 +56,8 @@ JOIN employer ON employer.id = vacancy.employer_id'''
 
     @staticmethod
     def get_avg_salary():
+        """средняя зарплата по вакансиям."""
+        print(DBManager.get_avg_salary.__doc__)
         sql = '''SELECT ROUND(AVG(salary), 2)
 FROM vacancy
 WHERE salary > 0'''
@@ -63,6 +67,8 @@ WHERE salary > 0'''
 
     @staticmethod
     def get_vacancies_with_higher_salary():
+        """список всех вакансий, у которых зарплата выше средней по всем вакансиям."""
+        print(DBManager.get_vacancies_with_higher_salary.__doc__)
         sql = '''SELECT vacancy.name, salary
                     FROM vacancy
                     WHERE salary > (SELECT AVG(salary)
@@ -75,7 +81,8 @@ WHERE salary > 0'''
 
     @staticmethod
     def get_vacancies_with_keyword(word: str):
-
+        """список всех вакансий, в названии которых содержатся переданные в метод слова, например python."""
+        print(DBManager.get_vacancies_with_keyword.__doc__)
         sql = f'''SELECT vacancy.name
 FROM vacancy
 WHERE LOWER(vacancy.name) LIKE ('%{word.lower()}%')'''

@@ -17,13 +17,14 @@ def main():
               "5 - список всех вакансий, в названии которых содержатся ключевое слово, например python.\n"
               "0 - Завершение работы программы")
 
-        a = int(input('введите запрос: '))
+        a = int(input('Введите запрос: '))
         if a == 5:
             choice_request.get(a)((input('Введите слово для поиска поиска по базе  ')))
         elif 0 < a < 5:
             choice_request.get(a)()
         elif a == 0:
             DBManager.close_connection()
+            print('До скорой встречи!')
             break
         else:
             print('такого запроса не существует')

@@ -33,12 +33,14 @@ class DBManager:
 
     @staticmethod
     def get_companies_and_vacancies_count():
+        """список всех компаний и количество вакансий у каждой компании."""
+        print(DBManager.get_companies_and_vacancies_count.__doc__)
         sql = '''SELECT employer.id, count(vacancy.employer_id)
 FROM employer
 JOIN vacancy on employer.id = vacancy.employer_id
 GROUP BY employer.id'''
         cursor.execute(sql)
-        print(cursor.fetchall())
+        DBManager.outprint(cursor.fetchall())
         connection.commit()
 
     @staticmethod
@@ -47,16 +49,16 @@ GROUP BY employer.id'''
 FROM vacancy
 JOIN employer ON employer.id = vacancy.employer_id'''
         cursor.execute(sql)
-        print(cursor.fetchall())
+        DBManager.outprint(cursor.fetchall())
         connection.commit()
 
     @staticmethod
     def get_avg_salary():
-        sql = '''SELECT AVG(salary)
+        sql = '''SELECT ROUND(AVG(salary), 2)
 FROM vacancy
 WHERE salary > 0'''
         cursor.execute(sql)
-        print(cursor.fetchall())
+        DBManager.outprint(cursor.fetchall())
         connection.commit()
 
     @staticmethod
@@ -67,7 +69,7 @@ WHERE salary > 0'''
 				    FROM vacancy
 				    WHERE salary > 0)'''
         cursor.execute(sql)
-        print(cursor.fetchall())
+        DBManager.outprint(cursor.fetchall())
         connection.commit()
 
 
@@ -78,10 +80,16 @@ WHERE salary > 0'''
 FROM vacancy
 WHERE LOWER(vacancy.name) LIKE ('%{word.lower()}%')'''
         cursor.execute(sql)
-        print(cursor.fetchall())
+        DBManager.outprint(cursor.fetchall())
         connection.commit()
-        connection.close
 
 
+    @staticmethod
+    def outprint(data):
+        for line in data:
+            print('=' * 100)
+            print(*line, sep=' || ')
 
-
+    @staticmethod
+    def close_connection():
+        connection.close()
